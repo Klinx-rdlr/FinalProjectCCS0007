@@ -1,0 +1,16 @@
+Student ID Number: 2.02211e+08
+Full Name: Rhode Danniel 
+Birthday: 2/3/2000
+Address: khsdh
+Gender: Male
+Degree Program: BSCS
+Year Level: 1
+
+Student ID Number: 2.02211e+08
+Full Name: Kirsten
+Birthday: 2/3/2001
+Address: jgfb
+Gender: Female
+Degree Program: bscs
+Year Level: 3
+

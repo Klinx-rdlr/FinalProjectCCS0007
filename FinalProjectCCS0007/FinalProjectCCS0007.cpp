@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <sstream>
+#include <fstream>
 
 using namespace std;
 char corner1 = 201, corner2 = 187, corner3 = 200, corner4 = 188, line = 205, side = 186, bullet = 254, arrow1 = 175, arrow2 = 174;
@@ -161,7 +162,7 @@ public:
     {
 
         Node* ptr = nodeExists(k);
-        if (ptr != NULL)
+        if (ptr != nullptr)
         {
 
             cout << "Node Data Updated Successfully" << endl;
@@ -229,14 +230,13 @@ public:
 
     int* collectRecord_int(string name)
     {
-        int size = listCount(); int i = 0;
+        int size = listCount();
         int* year_lvl = new int[size];
         Node* temp = head;
-
-        while (temp != nullptr)
+        int i = 0;
+        while (temp != nullptr && i < size)
         {
             year_lvl[i] = temp->yLevel;
-
             i++;
             temp = temp->next;
         }
@@ -248,7 +248,7 @@ public:
 
     string* collectRecord(string name)
     {
-        int size = listCount(); int i = 0;
+        int size = listCount(); 
         Node* temp = head;
 
         string* fname = new string[size];
@@ -262,6 +262,7 @@ public:
         }
         else
         {
+            int i = 0;
             while (temp != nullptr)
             {
                 fname[i] = temp->fName;
@@ -274,11 +275,21 @@ public:
             }
         };
 
-        if (name == "Name") { return fname; }
-        else if (name == "Address") { return address; }
-        else if (name == "Gender") { return gender; }
-        else if (name == "Degree Program") { return degprog; }
-        else { return nullptr; }
+        if (name == "NAME") {
+            return fname;
+        }
+        else if (name == "ADDRESS") { 
+            return address;
+        }
+        else if (name == "GENDER") { 
+            return gender; 
+        }
+        else if (name == "DEGREE PROGRAM") { 
+            return degprog; 
+        }
+        else { 
+            return nullptr;
+        }
 
     };
 
@@ -331,49 +342,85 @@ public:
         system("cls");
         Node* temp = head;
 
-        if (name == "Name" || name == "Gender" || name == "Address" || name == "Degree Program")
+        if (name == "NAME" || name == "GENDER" || name == "ADDRESS" || name == "DEGREE PROGRAM")
         {
             string* values;
             values = collectRecord(name);
 
-            cout << "ID Number: \t\t\t" << name << ":\n";
+            cout << setw(20) << setfill(' ') << corner1 << setfill(line) << setw(20) << corner2 << setfill(line) << setw(50) << corner2 << endl;
+            cout << setfill(' ') << setw(20) << side << "\t ID NUMBER:" << setw(5) << side << setw(22) << arrow1 << name << arrow2 << setw(27 - name.length()) << side << endl;
 
             int i = 0;
             while (temp != nullptr)
             {
-                cout << temp->getID() << '\t' << values[i] << endl;
+                cout << setfill(' ') << setw(20) << side << setw(14) << fixed << setprecision(0) << temp->getID() << setw(6) << side << setw(5) << arrow1 << values[i] << setw(45 - values[i].length()) << side << endl;
                 i++;
                 temp = temp->next;
             }
+            cout << setw(20) << setfill(' ') << corner3 << setfill(line) << setw(20) << corner4 << setfill(line) << setw(50) << corner4 << endl;
 
         }
-        else if (name == "Year Level")
+        else if (name == "YEAR LEVEL")
         {
             int* values;
             values = collectRecord_int(name);
 
-            cout << "ID Number: \t\t\t" << "Year Level:\n";
+            cout << setw(20) << setfill(' ') << corner1 << setfill(line) << setw(20) << corner2 << setfill(line) << setw(50) << corner2 << endl;
+            cout << setfill(' ') << setw(20) << side << "\t ID NUMBER:" << setw(5) << side << setw(22) << arrow1 << name << arrow2 << setw(27 - name.length()) << side << endl;
 
             int i = 0;
             while (temp != nullptr)
             {
-                cout << temp->getID() << '\t' << values[i] << endl;
+                cout << setfill(' ') << setw(20) << side << setw(14) << fixed << setprecision(0) << temp->getID() << setw(6) << side << setw(5) << arrow1 << values[i] << setw(44) << side << endl;
                 i++;
                 temp = temp->next;
             }
+            cout << setw(20) << setfill(' ') << corner3 << setfill(line) << setw(20) << corner4 << setfill(line) << setw(50) << corner4 << endl;
         }
         else {
-            cout << "ID Number: \t\t\t" << "Birthday:\n";
+            cout << setw(20) << setfill(' ') << corner1 << setfill(line) << setw(20) << corner2 << setfill(line) << setw(50) << corner2 << endl;
+            cout << setfill(' ') << setw(20) << side << "\t ID NUMBER:" << setw(5) << side << setw(22) << arrow1 << "BIRTHDAY" << arrow2 << setw(19) << side << endl;
 
             while (temp != nullptr)
             {
-                cout << temp->getID() << '\t' << temp->dd << '/' << temp->mm << '/' << temp->yy << endl;
+                string bday;
+                bday = to_string(temp->dd) + to_string(temp->mm) + to_string(temp->yy);
+                int size = bday.length() + 2; int size2;
+                if (size == 8) { size2 = 37; }
+                else if (size == 9) { size2 = 36; }
+                else { size2 = 35; }
+            
+                cout << setfill(' ') << setw(20) << side << setw(14) << fixed << setprecision(0) << temp->getID() << setw(6) << side << setw(5) << arrow1 << temp->dd << '/' << temp->mm << '/' << temp->yy << setw(size2) << side << endl;
                 temp = temp->next;
             }
+            cout << setw(20) << setfill(' ') << corner3 << setfill(line) << setw(20) << corner4 << setfill(line) << setw(50) << corner4 << endl;
         }
 
     };
+
+
+    void saveRecord(string name, ofstream &file) {
+        Node* temp = head;
+
+        file.open(name, ios::app);
+
+        while (temp != nullptr) {
+            file << "Student ID Number: " << fixed << setprecision(0) << temp->getID() << endl;
+            file << "Full Name: " << temp->fName << endl;
+            file << "Birthday: " << temp->dd << '/' << temp->mm << '/' << temp->yy << endl;
+            file << "Address: " << temp->address << endl;
+            file << "Gender: " << temp->gender << endl;
+            file << "Degree Program: " << temp->dProgram << endl;
+            file << "Year Level: " << temp->yLevel;
+            file << endl << endl;
+
+            temp = temp->next;
+        }
+        file.close();
+    }
 };
+
+    
 
 Node* makeStudent(Node* n1);
 void searchRecord(StudentRecord obj);
@@ -385,13 +432,17 @@ bool checkID(double num);
 bool checkBDAY(int dd, int mm, int yy);
 bool checkGENDER(string gender);
 bool checkYRLVL(int yrlvl);
+string saveProgress();
+void members();
 
 int main() {
 
+    ofstream fout;
     StudentRecord obj;
     int option;
     do {
         system("cls"); system("Color 0E");
+        cout << endl;
         cout << setfill(' ') << setw(20) << corner1 << setfill(line) << setw(32) << arrow1 << "HOME" << arrow2 << setw(35) << corner2;
         cout << endl << setfill(' ') << setw(20) << side << "   \t\t\t\t\t\t\t\t\t" << "   " << side << endl;
         cout << setfill(' ') << setw(20) << side << "\t\t    WELCOME TO GROUP XYZ STUDENT INFORMATION SYSTEM\t" << "   " << side << endl;
@@ -439,6 +490,8 @@ int main() {
             deleteRecord(obj);
             break;
         case 6:
+            obj.saveRecord(saveProgress(), fout);
+            members();
             exit(EXIT_SUCCESS);
         default:
             cout << "Enter Proper Option number " << endl;
@@ -448,6 +501,69 @@ int main() {
 
     return 0;
 };
+
+
+string saveProgress() {
+    string placeholder; char option;
+    system("cls");
+    cout << "\n\n\n\n\n\n\n\n\n";
+    cout << setw(20) << corner1 << setfill(line) << setw(80) << setw(72) << corner2 << endl;
+    cout << setfill(' ') << setw(20) << side << setw(72) << side << endl;
+    cout << setw(20) << side << setw(16) << arrow1 << "Would you like to save progress? (Y/N)" << arrow2 << setfill(' ') << setw(17) << side << endl;
+    cout << setfill(' ') << setw(20) << side << setw(72) << side << endl;
+    cout << setfill(' ') << setw(20) << corner3 << setfill(line) << setw(72) << corner4 << endl;
+    cout << setfill(' ') << setw(51) << arrow1 << "CHOICE: ";
+    cin >> option;
+
+    if (tolower(option) == 'y') {
+        system("cls");
+        cout << "\n\n\n\n\n\n\n\n\n";
+        cout << setw(20) << corner1 << setfill(line) << setw(80) << setw(72) << corner2 << endl;
+        cout << setfill(' ') << setw(20) << side << setw(72) << side << endl;
+        cout << setw(20) << side << setw(27) << arrow1 << "ENTER FILE NAME: " << arrow2 << setfill(' ') << setw(27) << side << endl;
+        cout << setw(20) << side << setw(16) << arrow1 << "(Add \".txt\" at the end of the file name)" << arrow2 << setfill(' ') << setw(15) << side << endl;
+        cout << setfill(' ') << setw(20) << side << setw(72) << side << endl;
+        cout << setfill(' ') << setw(20) << corner3 << setfill(line) << setw(72) << corner4 << endl;
+        cout << setfill(' ') << setw(41) << arrow1 << "FILE NAME: ";
+        while (true) {
+            cin >> placeholder;
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore();
+                cout << endl << setfill(' ') << setw(41) << arrow1 << "INVALID INPUT\n";
+                cout << setfill(' ') << setw(41) << arrow1 << "RE-ENTER - FILE NAME:";
+            }
+            else if (placeholder.substr(placeholder.find_last_of(".") + 1) != "txt") {
+                cout << endl << setfill(' ') << setw(41) << arrow1 << "INVALID FORMAT\n";
+                cout << setfill(' ') << setw(41) << arrow1 << "RE-ENTER - FILE NAME:";
+            }
+            else {
+                break;
+            }
+        }
+     
+        return placeholder;
+    }
+    else {
+        return NULL;
+    }
+}
+
+
+void members() {
+    system("cls");
+    cout << "\n\n\n\n\n\n";
+    cout << setw(20) << corner1 << setfill(line) << setw(80) << setw(58) << corner2 << endl;
+    cout << setfill(' ') << setw(20) << side << setw(58) << side << endl;
+    cout << setw(20) << side << setw(25) << arrow1 << "MEMBERS" << arrow2 << setfill(' ') << setw(25) << side << endl;
+    cout << setw(20) << side << setw(14) << arrow1 << "[1] RHODE DANNIEL L. REYES" << setw(18) << side << endl;
+    cout << setw(20) << side << setw(14) << arrow1 << "[2] KIRSTEN HAILEY D. ESCUETA" << setw(15) << side << endl;
+    cout << setw(20) << side << setw(14) << arrow1 << "[3] RAMI YOUSEF S. ABUARQOUB" << setw(16) << side << endl;
+    cout << setfill(' ') << setw(20) << side << setw(58) << side << endl;
+    cout << setfill(' ') << setw(20) << corner3 << setfill(line) << setw(58) << corner4 << endl;
+    cout << "\n\n\n\n\n";
+}
+
 
 
 void displaySpecificRecord(StudentRecord obj) {
@@ -485,27 +601,27 @@ void displaySpecificRecord(StudentRecord obj) {
     case 0:
         return;
     case 1:
-        obj.specificRecord("Name");
+        obj.specificRecord("NAME");
         pause();
         break;
     case 2:
-        obj.specificRecord("Birthday");
+        obj.specificRecord("BIRTHDAY");
         pause();
         break;
     case 3:
-        obj.specificRecord("Gender");
+        obj.specificRecord("GENDER");
         pause();
         break;
     case 4:
-        obj.specificRecord("Address");
+        obj.specificRecord("ADDRESS");
         pause();
         break;
     case 5:
-        obj.specificRecord("Degree Program");
+        obj.specificRecord("DEGREE PROGRAM");
         pause();
         break;
     case 6:
-        obj.specificRecord("Year Level");
+        obj.specificRecord("YEAR LEVEL");
         pause();
         break;
     default:
@@ -526,7 +642,7 @@ void searchRecord(StudentRecord obj) {
 
     system("cls");
     int user_option; string name; double idNumber;
-
+    cout << "\n\n\n\n\n\n";
     cout << setw(20) << corner1 << setfill(line) << setw(80) << setw(58) << corner2 << endl;
     cout << setfill(' ') << setw(20) << side << setw(58) << side << endl;
     cout << setw(20) << side << "\t\t\t" << arrow1 << "SEARCH RECORD" << arrow2 << setfill(' ') << setw(23) << side << endl;
@@ -615,12 +731,15 @@ void deleteRecord(StudentRecord obj) {
     double idNumber;
 
     while (true) {
+
         system("cls"); system("Color 0E");
+
+        cout << "\n\n\n\n\n\n\n";
         cout << setw(20) << corner1 << setfill(line) << setw(100) << setw(66) << corner2 << endl;
         cout << setfill(' ') << setw(20) << side << setw(66) << side << endl;
         cout << setw(20) << side << "\t\t   Delete Node By Student id number" << setw(19) << side << endl;
         cout << setw(20) << side << "\t\tEnter the student id number to be deleted : " << setw(10) << side << endl;
-        cout << setw(20) << side << "\t\t\t   Enter 0 to go back" << setw(25) << side << endl;
+        cout << setw(20) << side << "\t\t\t   [0] to go back" << setw(29) << side << endl;
         cout << setw(20) << side << setw(66) << side << endl;
         cout << setfill(' ') << setw(20) << corner3 << setfill(line) << setw(66) << corner4 << endl;
         cout << setfill(' ');
@@ -695,12 +814,12 @@ Node* makeStudent(Node* n1) {
     getline(cin, address);
     cout << "\t\t\t\t    _________________________________________________________\n\n";
 
+    cout << endl << setw(37) << arrow1 << "Enter Birthday: " << arrow2 << endl;
+    cout << setfill(' ') << setw(52) << "(EX. 03/04/2000)\n";
+
     while (true) {
 
-        cout << setw(37) << arrow1 << "Enter Birthday: " << arrow2 << endl;
-        cout << setfill(' ') << setw(52) << "(EX. 03/04/2000)" << endl << endl;
-
-        cout << setfill(' ') << setw(37) << arrow1 << "DD: ";
+        cout << endl << setfill(' ') << setw(37) << arrow1 << "DD: ";
         while (true)
         {
             cin >> dd;
@@ -743,7 +862,7 @@ Node* makeStudent(Node* n1) {
                 cout << endl << setfill(' ') << setw(37) << arrow1 << "RE-ENTER - YYYY: ";
             }
             else {
-                cout << "\t\t\t\t    ----------------\n";
+                cout << "\t\t\t\t    ----------------\n\n";
                 break;
             }
         }
@@ -759,7 +878,7 @@ Node* makeStudent(Node* n1) {
 
     while (true) {
         cin.ignore();
-        cout << setw(37) << arrow1 << "Enter Gender: " << arrow2 << endl;
+        cout << endl <<setw(37) << arrow1 << "Enter Gender: " << arrow2 << endl;
         cout << setfill(' ') << setw(54) << "(EX. Male/Female)" << endl << endl;
         cout << setfill(' ') << setw(37) << arrow1 << "GENDER: ";
         getline(cin, gender);
@@ -772,7 +891,7 @@ Node* makeStudent(Node* n1) {
             break;
         }
     }
-    cout << setw(37) << arrow1 << "Enter Degree Program: " << arrow2 << endl;
+    cout << endl << setw(37) << arrow1 << "Enter Degree Program: " << arrow2 << endl;
     cout << setfill(' ') << setw(37) << arrow1 << "DEGREE: ";
     getline(cin, dProgram);
     cout << "\t\t\t\t    ----------------\n\n";
