@@ -401,6 +401,9 @@ public:
 
     void saveRecord(string name, ofstream& file) {
         Node* temp = head;
+        if (name == " ") {
+            return;
+        }
 
         file.open(name, ios::app);
 
@@ -417,7 +420,9 @@ public:
             temp = temp->next;
         }
         file.close();
+        return;
     }
+
 };
 
 
@@ -737,9 +742,9 @@ void deleteRecord(StudentRecord obj) {
         cout << "\n\n\n\n\n\n\n";
         cout << setw(20) << corner1 << setfill(line) << setw(100) << setw(66) << corner2 << endl;
         cout << setfill(' ') << setw(20) << side << setw(66) << side << endl;
-        cout << setw(20) << side << "\t\t   Delete Node By Student id number" << setw(19) << side << endl;
-        cout << setw(20) << side << "\t\tEnter the student id number to be deleted : " << setw(10) << side << endl;
-        cout << setw(20) << side << "\t\t\t   [0] to go back" << setw(29) << side << endl;
+        cout << setw(20) << side << "\t\t   DELETE NODE BY STUDENT ID NUMBER" << setw(19) << side << endl;
+        cout << setw(20) << side << "\t\tENTER THE STUDENT ID NUMBER TO BE DELETED : " << setw(10) << side << endl;
+        cout << setw(20) << side << "\t\t\t     [0] go back" << setw(31) << side << endl;
         cout << setw(20) << side << setw(66) << side << endl;
         cout << setfill(' ') << setw(20) << corner3 << setfill(line) << setw(66) << corner4 << endl;
         cout << setfill(' ');
@@ -776,7 +781,7 @@ Node* makeStudent(Node* n1) {
         system("cls");
         cout << setw(20) << corner1 << setfill(line) << setw(100) << setw(64) << corner2 << endl;
         cout << "\t\t   " << side << "\t\t\t\t\t\t\t\t   " << side << endl;
-        cout << "\t\t   " << side << "\t\t   Enter Student Data to be recorded\t\t   " << side << endl;
+        cout << "\t\t   " << side << "\t\t   ENTER STUDENT DATA TO BE RECORDED\t\t   " << side << endl;
         cout << "\t\t   " << side << "\t\t\t\t\t\t\t\t   " << side << endl;
         cout << setfill(' ') << setw(20) << corner3 << setfill(line) << setw(64) << corner4 << endl;
         cout << setfill(' ') << setw(37) << arrow1 << "Enter Student ID Number: " << arrow2 << endl;
