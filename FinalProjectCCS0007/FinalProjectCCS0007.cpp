@@ -767,20 +767,9 @@ void searchRecord(StudentRecord obj) {
 
     case 2:
         cout << setfill(' ') << setw(41) << arrow1 << "ENTER STUDENT NAME: ";
-        while (true) {
-
-            cin >> name;
-            if (cin.fail()) {
-                cin.clear();
-                cin.ignore();
-                cout << setfill(' ') << setw(41) << arrow1 << "INVALID INPUT\n";
-                cout << setfill(' ') << setw(41) << arrow1 << "RE - ENTER STUDENT NAME: ";
-
-            }
-            else {
-                break;
-            };
-        };
+        cin.ignore();
+        cin.clear();
+        getline(cin, name);
 
         obj.searchRecord(name);
         break;
