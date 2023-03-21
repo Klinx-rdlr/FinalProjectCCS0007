@@ -48,6 +48,7 @@ public:
         dd = 0;
         yy = 0;
         yLevel = 0;
+        idNumber = 0;
         address = "";
         gender = "";
         dProgram = "";
@@ -81,7 +82,7 @@ public:
 
 
     //checks whether a student id already exists.
-    Node* nodeExists(int k)
+    Node* nodeExists(double k)
     {
         Node* temp = nullptr;
         Node* ptr = head;
@@ -143,10 +144,11 @@ public:
         }
     }
 
-    //deletes a node based on its student id number.
+    //deletes a node based on its student id number. 
     void deleteNodeByKey(double k)
     {
         Node* ptr = nodeExists(k);
+
         if (ptr == nullptr)
         {
             cout << "Student ID with this number: " << fixed << setprecision(0) << k << " doesn't exist, please try again" << endl;
@@ -190,12 +192,12 @@ public:
     //Prints all of the data in each node.
     void printList()
     {
-        if (head == nullptr)
+        Node* temp = head;
+        if (temp == nullptr)
         {
             cout << "No Nodes in Doubly Linked List";
         }
         else {
-            Node* temp = head;
 
             cout << setw(20) << corner1 << setfill(line) << setw(80) << setw(58) << corner2 << endl;
             cout << "\t\t   " << side << "\t\t\t\t\t\t\t" << "     " << side << endl;
@@ -803,7 +805,7 @@ void deleteRecord(StudentRecord obj) {
         cout << setfill(' ') << setw(20) << side << setw(66) << side << endl;
         cout << setw(20) << side << "\t\t   DELETE NODE BY STUDENT ID NUMBER" << setw(19) << side << endl;
         cout << setw(20) << side << "\t\tENTER THE STUDENT ID NUMBER TO BE DELETED : " << setw(10) << side << endl;
-        cout << setw(20) << side << "\t\t\t     [0] go back" << setw(31) << side << endl;
+        cout << setw(20) << side << "\t\t\t     [0] go back" << setw(30) << side << endl;
         cout << setw(20) << side << setw(66) << side << endl;
         cout << setfill(' ') << setw(20) << corner3 << setfill(line) << setw(66) << corner4 << endl;
         cout << setfill(' ');
@@ -969,8 +971,8 @@ Node* makeStudent(Node* n1) {
             pause();
         }
         else {
-            break;
             cout << "\t\t\t\t    ----------------\n\n";
+            break;
         }
     }
 
@@ -993,7 +995,7 @@ bool checkID(double num) {
     ss << num;
     ss >> id;
     int size = id.length();
-    if (size < 7) {
+    if (size == 7) {
         return false;
     }
     else {
