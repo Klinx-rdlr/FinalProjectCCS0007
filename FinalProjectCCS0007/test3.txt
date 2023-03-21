@@ -1,0 +1,16 @@
+Student ID Number: 202210865
+Full Name: Rhode Danniel
+Birthday: 4/2/2003
+Address: 309
+Gender: Male
+Degree Program: BSCS
+Year Level: 1
+
+Student ID Number: 202210866
+Full Name: kirsten
+Birthday: 6/30/2002
+Address: cainta
+Gender: Female
+Degree Program: bscs
+Year Level: 3
+

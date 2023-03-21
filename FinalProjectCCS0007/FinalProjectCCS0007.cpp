@@ -5,7 +5,16 @@
 #include <fstream>
 
 using namespace std;
+
+//values for the user interface design
 char corner1 = 201, corner2 = 187, corner3 = 200, corner4 = 188, line = 205, side = 186, bullet = 254, arrow1 = 175, arrow2 = 174;
+
+
+/*
+class Node
+- Contains student information members
+- Holds the address for the next and previous records
+*/
 
 class Node {
 public:
@@ -48,6 +57,13 @@ public:
     }
 };
 
+
+/*
+class Student Record
+- Contains the functions to manipulate the records and operations.
+- Organizes the structure of the node.
+*/
+
 class StudentRecord
 {
 
@@ -63,8 +79,8 @@ public:
         head = n;
     }
 
-    // 1. CHeck if node exists using key value
 
+    //checks whether a student id already exists.
     Node* nodeExists(int k)
     {
         Node* temp = nullptr;
@@ -82,6 +98,7 @@ public:
         return temp;
     }
 
+    //checks whether a student name already exists.
     Node* nodeExists_name(string k)
     {
         Node* temp = nullptr;
@@ -99,16 +116,18 @@ public:
         return temp;
     }
 
+
+    //adds a student in the structure.
     void appendNode(Node* n) {
         if (nodeExists(n->getID()) != nullptr)
         {
-            cout << "Node Already exists with key value : " << n->getID() << ". Append another node with different Key value" << endl;
+            cout << setfill(' ') << setw(37) << "Student ID: " << fixed << setprecision(0) << n->getID() << " , Already exists please try again." << endl;
         }
         else {
             if (head == nullptr)
             {
                 head = n;
-                cout << "Node Appended as Head Node" << endl;
+                cout << endl << setfill (' ') << setw(37) << arrow1 << "First student record is successfully added" << arrow2 << endl;
             }
             else
             {
@@ -119,11 +138,12 @@ public:
                 }
                 ptr->next = n;
                 n->previous = ptr;
-                cout << "Node Appended" << endl;
+                cout << setfill(' ') <<  setw(37) << arrow1 << "Student record is successfully added" << arrow2 << endl;
             }
         }
     }
 
+    //deletes a node based on its student id number.
     void deleteNodeByKey(double k)
     {
         Node* ptr = nodeExists(k);
@@ -136,6 +156,7 @@ public:
             if (head->getID() == k)
             {
                 head = head->next;
+                head = nullptr;
                 cout << "Student ID with number: " << k << " is officially deleted" << endl;
             }
             else {
@@ -158,23 +179,7 @@ public:
         }
     };
 
-    void updateNodeByKey(int k, int d)
-    {
-
-        Node* ptr = nodeExists(k);
-        if (ptr != nullptr)
-        {
-
-            cout << "Node Data Updated Successfully" << endl;
-        }
-        else
-        {
-            cout << "Node Doesn't exist with key value : " << k << endl;
-        }
-
-    }
-
-    // 7th printing
+    //Prints all of the data in each node.
     void printList()
     {
         if (head == nullptr)
@@ -209,6 +214,8 @@ public:
     };
 
 
+
+    //Calculates the total nodes in the stucture.
     int listCount()
     {
         int count = 0;
@@ -228,6 +235,11 @@ public:
         }
     };
 
+
+
+
+    /*Traverses through all of the nodes in the structureand collecting the datas and stores them to an int array,
+    then returns the array based on the users input. */
     int* collectRecord_int(string name)
     {
         int size = listCount();
@@ -245,7 +257,8 @@ public:
     };
 
 
-
+    /*Traverses through all of the nodes in the structureand collecting the datasand stores them to a string array,
+    then returns the array based on the users input. */
     string* collectRecord(string name)
     {
         int size = listCount();
@@ -353,7 +366,7 @@ public:
             int i = 0;
             while (temp != nullptr)
             {
-                cout << setfill(' ') << setw(20) << side << setw(14) << fixed << setprecision(0) << temp->getID() << setw(6) << side << setw(5) << arrow1 << values[i] << setw(45 - values[i].length()) << side << endl;
+                cout << setfill(' ') << setw(20) << side << setw(14) << fixed << setprecision(0) << temp->getID() << setw(6) << side << setw(5) << arrow1 << " " << values[i] << setw(44 - values[i].length()) << side << endl;
                 i++;
                 temp = temp->next;
             }
@@ -369,9 +382,25 @@ public:
             cout << setfill(' ') << setw(20) << side << "\t ID NUMBER:" << setw(5) << side << setw(22) << arrow1 << name << arrow2 << setw(27 - name.length()) << side << endl;
 
             int i = 0;
+            string year_lvl[4] = { "st Year", "nd Year", "rd Year", "th Year" };
             while (temp != nullptr)
             {
-                cout << setfill(' ') << setw(20) << side << setw(14) << fixed << setprecision(0) << temp->getID() << setw(6) << side << setw(5) << arrow1 << values[i] << setw(44) << side << endl;
+                string temp_str;
+                switch (temp->yLevel) {
+                case 1:
+                    temp_str = year_lvl[0];
+                    break;
+                case 2:
+                    temp_str = year_lvl[1];
+                    break;
+                case 3:
+                    temp_str = year_lvl[2];
+                    break;
+                case 4:
+                    temp_str = year_lvl[3];
+                    break;
+                }
+                cout << setfill(' ') << setw(20) << side << setw(14) << fixed << setprecision(0) << temp->getID() << setw(6) << side << setw(5) << arrow1 << " " << values[i] << temp_str << setw(36) << side << endl;
                 i++;
                 temp = temp->next;
             }
@@ -386,11 +415,11 @@ public:
                 string bday;
                 bday = to_string(temp->dd) + to_string(temp->mm) + to_string(temp->yy);
                 int size = bday.length() + 2; int size2;
-                if (size == 8) { size2 = 37; }
-                else if (size == 9) { size2 = 36; }
-                else { size2 = 35; }
+                if (size == 8) { size2 = 36; }
+                else if (size == 9) { size2 = 35; }
+                else { size2 = 34; }
 
-                cout << setfill(' ') << setw(20) << side << setw(14) << fixed << setprecision(0) << temp->getID() << setw(6) << side << setw(5) << arrow1 << temp->dd << '/' << temp->mm << '/' << temp->yy << setw(size2) << side << endl;
+                cout << setfill(' ') << setw(20) << side << setw(14) << fixed << setprecision(0) << temp->getID() << setw(6) << side << setw(5) << arrow1 << " " << temp->dd << '/' << temp->mm << '/' << temp->yy << setw(size2) << side << endl;
                 temp = temp->next;
             }
             cout << setw(20) << setfill(' ') << corner3 << setfill(line) << setw(20) << corner4 << setfill(line) << setw(50) << corner4 << endl;
@@ -425,20 +454,41 @@ public:
 
 };
 
-
+//Function : makeStudent - getting and setting the data and key of the nodes, also used for validating inputs.
 
 Node* makeStudent(Node* n1);
+
+/*
+Functions for operation :
+searchRecord - contains two functions, used for searching a specific ID Number or Student Name, then returns it record.
+deleteRecord - delinks the node from the structure.
+displayAllRecords - traverses to all of the node in the structure, then displays all of the data.
+displaySpecificRecord - traverses a specific data of the inputted data to be searched, then displays all of it. 
+
+*/
+
 void searchRecord(StudentRecord obj);
 void deleteRecord(StudentRecord obj);
 void displayAllRecords(StudentRecord obj);
 void displaySpecificRecord(StudentRecord obj);
+
+//Function : pause - acts like _getch(), used for displaying the output, until the user enters a key. 
 void pause();
+
+//Function : "check" - used for checking the data if it is valid or not, returns true or false.
+
 bool checkID(double num);
 bool checkBDAY(int dd, int mm, int yy);
 bool checkGENDER(string gender);
 bool checkYRLVL(int yrlvl);
+
+//Function : saveprogress - used for saving the records into a text format. 
 string saveProgress();
+
+// Function : members - displaying the members of the group.
 void members();
+
+
 
 int main() {
 
@@ -479,6 +529,7 @@ int main() {
             break;
         case 1:
             obj.appendNode(makeStudent(n1));
+            pause();
             break;
 
         case 2:
@@ -564,6 +615,7 @@ void members() {
     cout << setw(20) << side << setw(14) << arrow1 << "[1] RHODE DANNIEL L. REYES" << setw(18) << side << endl;
     cout << setw(20) << side << setw(14) << arrow1 << "[2] KIRSTEN HAILEY D. ESCUETA" << setw(15) << side << endl;
     cout << setw(20) << side << setw(14) << arrow1 << "[3] RAMI YOUSEF S. ABUARQOUB" << setw(16) << side << endl;
+    cout << setw(20) << side << setw(14) << arrow1 << "[4] MARVIN MARVIN DIZON" << setw(21) << side << endl;
     cout << setfill(' ') << setw(20) << side << setw(58) << side << endl;
     cout << setfill(' ') << setw(20) << corner3 << setfill(line) << setw(58) << corner4 << endl;
     cout << "\n\n\n\n\n";
@@ -820,7 +872,7 @@ Node* makeStudent(Node* n1) {
     cout << "\t\t\t\t    _________________________________________________________\n\n";
 
     cout << endl << setw(37) << arrow1 << "Enter Birthday: " << arrow2 << endl;
-    cout << setfill(' ') << setw(53) << "(EX. 03/04/2000)\n";
+    cout << setfill(' ') << setw(37) << arrow1 << "(EX. DD: 03/MM: 04/YYYY: 2000)\n";
 
     while (true) {
 
@@ -925,7 +977,6 @@ Node* makeStudent(Node* n1) {
     n1->yy = yy;
     n1->dProgram = dProgram;
 
-    pause();
     return n1;
 }
 
@@ -955,7 +1006,7 @@ bool checkBDAY(int dd, int mm, int yy) {
     ss << yy;
     ss >> year;
 
-    if ((day.length() >= 1 && day.length() <= 2) && (month.length() >= 1 && month.length() <= 2) && (year.length() == 4) && (yy < 2023)) {
+    if ((day.length() >= 1 && day.length() <= 2) && (month.length() >= 1 && month.length() <= 2) && (year.length() == 4) && (yy < 2023) && (mm > 0 && mm <= 12) && (dd > 0 && dd <= 31)) {
         return true;
     }
     else {
