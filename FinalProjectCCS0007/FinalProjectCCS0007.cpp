@@ -127,7 +127,7 @@ public:
             if (head == nullptr)
             {
                 head = n;
-                cout << endl << setfill (' ') << setw(37) << arrow1 << "First student record is successfully added" << arrow2 << endl;
+                cout << endl << setfill(' ') << setw(37) << arrow1 << "First student record is successfully added" << arrow2 << endl;
             }
             else
             {
@@ -138,7 +138,7 @@ public:
                 }
                 ptr->next = n;
                 n->previous = ptr;
-                cout << setfill(' ') <<  setw(37) << arrow1 << "Student record is successfully added" << arrow2 << endl;
+                cout << setfill(' ') << setw(37) << arrow1 << "Student record is successfully added" << arrow2 << endl;
             }
         }
     }
@@ -149,34 +149,42 @@ public:
         Node* ptr = nodeExists(k);
         if (ptr == nullptr)
         {
-            cout << "Student ID with this number: " << k << " doesn't exist, please try again" << endl;
+            cout << "Student ID with this number: " << fixed << setprecision(0) << k << " doesn't exist, please try again" << endl;
         }
         else {
 
             if (head->getID() == k)
             {
-                head = head->next;
-                head = nullptr;
-                cout << "Student ID with number: " << k << " is officially deleted" << endl;
-            }
-            else {
-                Node* nextNode = ptr->next;
-                Node* prevNode = ptr->previous;
+                    if (head->next == nullptr)
+                    {
+                        head = nullptr;
+                        cout << "Student ID with number: " << fixed << setprecision(0) << k << " is officially deleted" << endl;
+                    }
+                    else
+                    {
+                        head = head->next;
+                        head->previous = nullptr;
+                        cout << "Student ID with number: " << fixed << setprecision(0) << k << " is officially deleted" << endl;
+                    }
+             }
+             else {
+                    Node* nextNode = ptr->next;
+                    Node* prevNode = ptr->previous;
 
-                if (nextNode == nullptr)
-                {
-                    prevNode->next = nullptr;
-                    cout << "Student ID with number: " << k << " is officially deleted" << endl;
-                }
-                else
-                {
-                    prevNode->next = nextNode;
-                    nextNode->previous = prevNode;
-                    cout << "Student ID with number: " << k << " is officially deleted" << endl;
+                    if (nextNode == nullptr)
+                    {
+                        prevNode->next = nullptr;
+                        cout << "Student ID with number: " << fixed << setprecision(0) << k << " is officially deleted" << endl;
+                    }
+                    else
+                    {
+                        prevNode->next = nextNode;
+                        nextNode->previous = prevNode;
+                        cout << "Student ID with number: " << fixed << setprecision(0) << k << " is officially deleted" << endl;
 
+                    }
                 }
             }
-        }
     };
 
     //Prints all of the data in each node.
@@ -463,8 +471,7 @@ Functions for operation :
 searchRecord - contains two functions, used for searching a specific ID Number or Student Name, then returns it record.
 deleteRecord - delinks the node from the structure.
 displayAllRecords - traverses to all of the node in the structure, then displays all of the data.
-displaySpecificRecord - traverses a specific data of the inputted data to be searched, then displays all of it. 
-
+displaySpecificRecord - traverses a specific data of the inputted data to be searched, then displays all of it.
 */
 
 void searchRecord(StudentRecord obj);
