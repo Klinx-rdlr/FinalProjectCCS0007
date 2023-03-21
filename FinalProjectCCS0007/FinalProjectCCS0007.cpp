@@ -153,7 +153,8 @@ public:
         {
             cout << "Student ID with this number: " << fixed << setprecision(0) << k << " doesn't exist, please try again" << endl;
         }
-        else {
+        else
+        {
 
             if (head->getID() == k)
             {
@@ -169,7 +170,8 @@ public:
                         cout << "Student ID with number: " << fixed << setprecision(0) << k << " is officially deleted" << endl;
                     }
              }
-             else {
+             else 
+             {
                     Node* nextNode = ptr->next;
                     Node* prevNode = ptr->previous;
 
@@ -185,8 +187,8 @@ public:
                         cout << "Student ID with number: " << fixed << setprecision(0) << k << " is officially deleted" << endl;
 
                     }
-                }
-            }
+             }
+        }
     };
 
     //Prints all of the data in each node.
@@ -195,7 +197,7 @@ public:
         Node* temp = head;
         if (temp == nullptr)
         {
-            cout << "No Nodes in Doubly Linked List";
+            cout << setfill(' ') << setw(30) << arrow1 << "NO EXISTING STUDENT RECORD AVAILABLE" << arrow2 << endl;
         }
         else {
 
